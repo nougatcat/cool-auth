@@ -1,0 +1,59 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url       = env("POSTGRES_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+    id Int @id @default(autoincrement())
+
+    name String
+    email String @unique
+    password String
+    role UserRole @default(USER)
+    verified DateTime?
+
+    provider String?
+    providerId String?
+
+    verificationCode VerificationCode?
+    twoFactorCode TwoFactorCode?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model VerificationCode {
+    id Int @id @default(autoincrement())
+
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+
+    code String
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, code]) // чтобы в случае если послали код второй раз, то он отличался от предыдущего, логика - 1 юзер не может иметь больше одного уникального кода
+}
+
+model TwoFactorCode {
+    id Int @id @default(autoincrement())
+
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+
+    code String
+
+    createdAt DateTime @default(now())
+
+    @@unique([userId, code]) // чтобы в случае если послали код второй раз, то он отличался от предыдущего, логика - 1 юзер не может иметь больше одного уникального кода
+}
+
+enum UserRole {
+    USER
+    ADMIN
+}
