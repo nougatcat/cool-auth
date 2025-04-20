@@ -4,12 +4,11 @@
 import { Input } from "@/components/ui/input";
 import { ClearButton, ErrorText, RequiredSymbol } from "@/components/ui/validation";
 
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label?: string;
     required?: boolean;
     className?: string;
-    type?: string;
 }
 
 /**

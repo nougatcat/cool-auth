@@ -22,7 +22,8 @@ export function RegistrationForm({
                         <div className="flex flex-col gap-6">
                             <FormInput label='Имя' name='name' required type="text" />
                             <FormInput label='Email' name='email' required type="email" />
-                            <FormInput label='Пароль' name='password' required type="password" />
+                            <FormInput label='Пароль' name='password' required type="password"
+                                placeholder="Минимум 6 символов"/>
 
                             <Button type="submit" className="w-full">Зарегистрироваться</Button>
                         </div>
