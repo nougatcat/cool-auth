@@ -1,14 +1,17 @@
-import { Congrats, Container, LoginForm, RegistrationForm, VerificationForm } from "@/components/shared";
+import { Container } from "@/components/shared";
 
 
 
 export default function Home() {
   return (
-    <Container >
-      <LoginForm />
-      <RegistrationForm />
-      <VerificationForm whichCode="verification" />
-      <Congrats />
+    <Container className="text-6xl">
+      <a href="/login">login</a>
+      <br />
+      <a href="/register">register</a>
+      <br />
+      <a href="/verification">verification</a>
+      <br />
+      <a href="/me">me</a>
     </Container>
   );
 }
