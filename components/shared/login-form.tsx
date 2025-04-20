@@ -31,8 +31,7 @@ export function LoginForm({
                         </div>
                         <div className="mt-4 text-center text-sm">
                             Нет аккаунта?{" "}
-                            <a href="#" className="underline underline-offset-4">Создать аккаунт</a>
-                            {/* // TODO: Добавить переброс на страницу регистрации */}
+                            <a href="/register" className="underline underline-offset-4">Создать аккаунт</a>
                         </div>
                     </form>
                 </CardContent>

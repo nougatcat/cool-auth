@@ -19,7 +19,7 @@ export function Congrats({
                 <CardHeader>
                     <CardTitle className="text-2xl">Вход успешен!</CardTitle>
                     <CardDescription>
-                        Ваше имя - "имя пришедшее из пропсов, которое должен видеть только владелец аккаунта"
+                        Ваше имя - "имя пришедшее из пропсов, которое должен видеть только владелец аккаунта". Имя является секретной информацией, и видеть его должны только вы.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
