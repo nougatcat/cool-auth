@@ -1,19 +1,8 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import { FormInput } from "./form-template/form-input"
 
-
-/**
- * Готовый блок с сайта shadcn для дальнейшего редактирования
- */
 export function LoginForm({
     className,
     ...props
@@ -30,35 +19,20 @@ export function LoginForm({
                 <CardContent>
                     <form>
                         <div className="flex flex-col gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    required
-                                />
+                            <FormInput label='Email' name='email' required type="email" />
+                            <FormInput label='Пароль' name='password' required type="password" />
+                            <div className="flex items-center">
+                                <a href="#"
+                                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"> Забыли пароль? </a>
+                                {/* // TODO: Добавить сброс пароля */}
                             </div>
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Пароль</Label>
-                                    <a
-                                        href="#"
-                                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                    >
-                                        Забыли пароль?
-                                    </a>
-                                </div>
-                                <Input id="password" type="password" required />
-                            </div>
-                            <Button type="submit" className="w-full">
-                                Войти
-                            </Button>
+
+                            <Button type="submit" className="w-full">Войти</Button>
                         </div>
                         <div className="mt-4 text-center text-sm">
                             Нет аккаунта?{" "}
-                            <a href="#" className="underline underline-offset-4">
-                                Создать аккаунт
-                            </a>
+                            <a href="#" className="underline underline-offset-4">Создать аккаунт</a>
+                            {/* // TODO: Добавить переброс на страницу регистрации */}
                         </div>
                     </form>
                 </CardContent>

@@ -23,13 +23,10 @@ export function Congrats({
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form>
-                        <div className="flex flex-col gap-6">
-                            <Button type="submit" className="w-full">
-                                Выйти
-                            </Button>
-                        </div>
-                    </form>
+                    <div className="flex flex-col gap-6">
+                        <Button type="submit" className="w-full"> Выйти </Button>
+                        {/* // TODO: Добавить удаление куков (выход) */}
+                    </div>
                 </CardContent>
             </Card>
         </div>

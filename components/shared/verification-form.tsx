@@ -1,20 +1,14 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import { FormInput } from "./form-template/form-input"
 
+interface Props {
+    whichCode: 'verification' | 'twoFactor';
+    className?: string
+}
 
-export function VerificationForm({
-    className,
-    ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export const VerificationForm: React.FC<Props> = ({ className, whichCode, ...props }) => {
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card>
@@ -27,17 +21,8 @@ export function VerificationForm({
                 <CardContent>
                     <form>
                         <div className="flex flex-col gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Код</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    required
-                                />
-                            </div>
-                            <Button type="submit" className="w-full">
-                                Отправить
-                            </Button>
+                            <FormInput label='Код' name={whichCode} required type="text" />
+                            <Button type="submit" className="w-full">Отправить</Button>
                         </div>
                     </form>
                 </CardContent>

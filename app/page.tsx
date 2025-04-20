@@ -7,7 +7,7 @@ export default function Home() {
     <Container >
       <LoginForm />
       <RegistrationForm />
-      <VerificationForm />
+      <VerificationForm whichCode="verification" />
       <Congrats />
     </Container>
   );
