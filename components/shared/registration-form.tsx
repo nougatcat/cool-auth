@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FormInput } from "./form-template/form-input"
 import { Container } from "./container"
 
@@ -8,7 +8,7 @@ interface Props {
     className?: string
 }
 
-export const RegistrationForm: React.FC<Props> = ({className}) => {
+export const RegistrationForm: React.FC<Props> = ({ className }) => {
     return (
         <Container>
             <div className={cn("flex flex-col gap-6", className)}>
@@ -25,7 +25,9 @@ export const RegistrationForm: React.FC<Props> = ({className}) => {
                                 <FormInput label='Имя' name='name' required type="text" />
                                 <FormInput label='Email' name='email' required type="email" />
                                 <FormInput label='Пароль' name='password' required type="password"
-                                    placeholder="Минимум 6 символов"/>
+                                    placeholder="Минимум 10 символов" />
+                                <FormInput label='Пароль повторно' name='password' required type="password"
+                                    placeholder="Минимум 10 символов" />
                                 <Button type="submit" className="w-full">Зарегистрироваться</Button>
                             </div>
                         </form>

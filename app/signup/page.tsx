@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 
 
-export default function Register() {
+export default function SignUp() {
   const { data: session } = useSession();
   if (session) {
     return redirect('/')

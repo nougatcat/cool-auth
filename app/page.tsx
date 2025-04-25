@@ -1,4 +1,4 @@
-import { Container, LoginForm, Me } from "@/components/shared";
+import { LoginForm, Me } from "@/components/shared";
 import { getUserSession } from "@/lib/get-user-session";
 import { prisma } from "@/prisma/prisma-client";
 
@@ -15,5 +15,5 @@ export default async function Home() {
     return <LoginForm />
   }
 
-  return <Me />
+  return <Me user={user.name} />
 }

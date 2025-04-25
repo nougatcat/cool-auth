@@ -9,11 +9,20 @@ import {
 } from "@/components/ui/card"
 import { Container } from "./container"
 
+import { signOut } from 'next-auth/react';
+import { redirect } from "next/navigation";
+
 interface Props {
     className?: string
+    user: string
 }
 
-export const Me: React.FC<Props> = ({className}) => {
+export const Me: React.FC<Props> = ({user, className}) => {
+    const onClickSignOut = () => {
+        signOut({
+            callbackUrl: '/'
+        })
+    }
     return (
         <Container>
             <div className={cn("flex flex-col gap-6", className)}>
@@ -21,13 +30,17 @@ export const Me: React.FC<Props> = ({className}) => {
                     <CardHeader>
                         <CardTitle className="text-2xl">Вход успешен!</CardTitle>
                         <CardDescription>
-                            Ваше имя - "имя пришедшее из пропсов, которое должен видеть только владелец аккаунта". Имя является секретной информацией, и видеть его должны только вы.
+                            {user}, добро пожаловать!
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="flex flex-col gap-6">
-                            <Button type="submit" className="w-full"> Выйти </Button>
-                            {/* // TODO: Добавить удаление куков (выход) */}
+                            <Button 
+                                onClick={onClickSignOut}
+                                type="button"
+                                className="w-full"> 
+                                Выйти 
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>
