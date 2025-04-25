@@ -1,7 +1,7 @@
 //? схемы для zod
 import {z} from 'zod'
 
-export const passwordSchema = z.string().min(10, {message: 'Пароль должен содержать не менее 10 символов'})
+export const passwordSchema = z.string().min(6, {message: 'Пароль должен содержать не менее 6 символов'})
 
 /**
  * @param email

@@ -25,9 +25,9 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                 <FormInput label='Имя' name='name' required type="text" />
                                 <FormInput label='Email' name='email' required type="email" />
                                 <FormInput label='Пароль' name='password' required type="password"
-                                    placeholder="Минимум 10 символов" />
+                                    placeholder="Минимум 6 символов" />
                                 <FormInput label='Пароль повторно' name='password' required type="password"
-                                    placeholder="Минимум 10 символов" />
+                                    placeholder="Минимум 6 символов" />
                                 <Button type="submit" className="w-full">Зарегистрироваться</Button>
                             </div>
                         </form>

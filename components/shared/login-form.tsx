@@ -11,6 +11,7 @@ import { useSession, signIn } from 'next-auth/react'
 import { Container } from "./container"
 import { formLoginSchema, TFormLoginValues } from "@/constants/zod-schemas"
 import toast from "react-hot-toast"
+import { redirect } from "next/navigation"
 
 interface Props {
     className?: string
@@ -28,7 +29,7 @@ export const LoginForm: React.FC<Props> = ({className}) => {
         try {
             const resp = await signIn('credentials', {
                 ...data,
-                redirect: false, //! редиректить или не редиректить на главную после успешного входа. Т.к. мы и так на главной, то вроде необязательно
+                redirect: false, // редиректить или не редиректить на главную после успешного входа. В случае не успешного перекидывает на дефолтную форму некст аут
             })
             if (!resp?.ok) {
                 throw Error() //вызывает catch
@@ -37,10 +38,12 @@ export const LoginForm: React.FC<Props> = ({className}) => {
                 icon: '✅',
             })
         } catch (error) {
-            console.error('Error [LOGIN}',error)
+            // console.error('Error [LOGIN}',error)
             toast.error('Не удалось войти в аккаунт', {
                 icon: '❌',
             })
+        } finally {
+            redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
         }
     }
     return (

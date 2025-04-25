@@ -3,7 +3,6 @@ import { getUserSession } from "@/lib/get-user-session";
 import { prisma } from "@/prisma/prisma-client";
 
 
-
 export default async function Home() {
   const session = await getUserSession()
   if (!session) {

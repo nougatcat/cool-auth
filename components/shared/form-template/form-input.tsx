@@ -18,7 +18,17 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param required? - Обязательное поле или нет
  */
 export const FormInput: React.FC<Props> = ({ className, name, label, required, ...props }) => {
-    // TODO const {} = useFormContext()
+    const {
+        register,
+        formState: { errors },
+        watch,
+        setValue
+    } = useFormContext()
+    const value = watch(name);
+    const errorText = errors[name]?.message as string
+    const onClickClear = () => {
+        setValue(name, '', { shouldValidate: true })
+    }
     return (
         <div className={className}>
             {/* заголовок */}
@@ -31,13 +41,12 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, .
 
             {/* инпут поле */}
             <div className="relative ">
-                <Input {...props} />
+                <Input {...props} {...register(name)} />
 
-                {/* //TODO {value && <ClearButton onClick={onClickClear} />} */}
+                {value && <ClearButton onClick={onClickClear} />}
             </div>
 
-            <ErrorText text='Поле обязательное' className="mt-2" />
-            {/* //TODO {errorText && <ErrorText text={errorText} className="mt-2" />} */}
+            {errorText && <ErrorText text={errorText} className="mt-2" />}
         </div>
     )
 }
