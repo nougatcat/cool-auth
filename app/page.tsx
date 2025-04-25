@@ -7,25 +7,13 @@ import { prisma } from "@/prisma/prisma-client";
 export default async function Home() {
   const session = await getUserSession()
   if (!session) {
-    return (
-      <Container>
-        <LoginForm />
-      </Container>
-    )
+    return <LoginForm />
   }
   const user = await prisma.user.findFirst({ where: { id: Number(session?.id) } })
 
   if (!user) {
-    return (
-      <Container>
-        <LoginForm />
-      </Container>
-    )
+    return <LoginForm />
   }
 
-  return (
-    <Container>
-      <Me />
-    </Container>
-  )
+  return <Me />
 }

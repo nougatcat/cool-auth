@@ -6,13 +6,11 @@ import { redirect } from "next/navigation";
 
 
 export default function Register() {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   if (session) {
-      return redirect('/')
+    return redirect('/')
   }
   return (
-    <Container >
-      <RegistrationForm />
-    </Container>
+    <RegistrationForm />
   );
 }
