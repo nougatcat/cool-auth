@@ -1,14 +1,28 @@
+// 'use client'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import { FormInput } from "./form-template/form-input"
 
-export function LoginForm({
-    className,
-    ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { useSession, signIn } from 'next-auth/react'
+
+interface Props {
+    className?: string
+}
+
+export const LoginForm: React.FC<Props> = ({className}) => {
+    // const form = useForm({
+    //     resolver: zodResolver(),
+    //     defaultValues: {
+    //         email: '',
+    //         password: '',
+    //     }
+    // })
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className={cn("flex flex-col gap-6", className)}>
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl">Войти</CardTitle>

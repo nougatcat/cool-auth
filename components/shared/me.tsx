@@ -8,13 +8,13 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+interface Props {
+    className?: string
+}
 
-export function Congrats({
-    className,
-    ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export const Me: React.FC<Props> = ({className}) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className={cn("flex flex-col gap-6", className)}>
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl">Вход успешен!</CardTitle>

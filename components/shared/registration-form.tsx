@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import { FormInput } from "./form-template/form-input"
 
+interface Props {
+    className?: string
+}
 
-export function RegistrationForm({
-    className,
-    ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export const RegistrationForm: React.FC<Props> = ({className}) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className={cn("flex flex-col gap-6", className)}>
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl">Зарегистрироваться</CardTitle>
