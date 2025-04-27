@@ -14,5 +14,5 @@ export default async function Home() {
     return <LoginForm />
   }
 
-  return <Me user={user.name} />
+  return <Me user={user} />
 }
