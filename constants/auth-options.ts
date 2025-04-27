@@ -49,7 +49,17 @@ export const authOptions: AuthOptions = {
     },
     // что нужно делать при регистрации, авторизации, взаимодействии с jwt
     callbacks: {
-        
+        // функция контроля за авторизацией (тут нужно прописывать поведение для провайдеров). Если провайдеров нет, то эта функция необязательна, но я все равно ее написал
+        async signIn({ account }) {
+            try {
+                if (account?.provider === 'credentials') { //если вход по емаил и паролю, то выходим из функции и возвращаем true (т.е. разрешаем вход)
+                    return true
+                } else return false // т.к. провайдеров нет, то другого варианта входа нет. Вариант, когда есть провайдеры - см. next-pizza
+            } catch (e) {
+                console.error('Error [SIGNIN]', e)
+                return false
+            }
+        },
         // какую информацию надо записать в jwt токен при его создании или обновлении
         async jwt({ token }) {
             if (!token.email) return token
@@ -67,7 +77,7 @@ export const authOptions: AuthOptions = {
             return token
         },
         // какую информацию надо хранить в сессии
-        session({session, token}) {
+        session({ session, token }) {
             if (session?.user) {
                 session.user.id = token.id
                 session.user.role = token.role
