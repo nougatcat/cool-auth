@@ -68,17 +68,9 @@ export const Me: React.FC<Props> = ({ user, className }) => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="flex flex-col gap-6">
-                            <Button
-                                onClick={onClickSignOut}
-                                type="button"
-                                className="w-full">
-                                Выйти
-                            </Button>
-                        </div>
                         <FormProvider {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <div className=" mt-6 flex flex-col gap-6">
+                                <div className="flex flex-col gap-6">
                                     <FormInput name="name" label="Имя" required />
                                     <FormInput name="email" label="EMail" required />
 
@@ -87,6 +79,13 @@ export const Me: React.FC<Props> = ({ user, className }) => {
 
                                     <Button disabled={form.formState.isSubmitting} type="submit">
                                         Обновить данные
+                                    </Button>
+                                    <Button
+                                        onClick={onClickSignOut}
+                                        type="button"
+                                        variant="secondary"
+                                        className="w-full">
+                                        Выйти
                                     </Button>
                                 </div>
                             </form>
