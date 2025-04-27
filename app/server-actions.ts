@@ -26,8 +26,7 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
             data: {
                 email: body.email,
                 name: body.name,
-                password: body.password ? hashSync(body.password as string,10) : findUser?.password
-                // тут проверка нужна на случай если не меняли пароль, но меняли имя и/или почту
+                password: hashSync(body.password as string,10)
             }
         })
     } catch (err) {
