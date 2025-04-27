@@ -13,12 +13,6 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
             throw new Error('Пользователь не найден')
         }
 
-        const findUser = await prisma.user.findFirst({
-            where: {
-                id: Number(currentUser.id)
-            }
-        })
-
         await prisma.user.update({
             where: {
                 id: Number(currentUser.id)
@@ -30,7 +24,7 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
             }
         })
     } catch (err) {
-        console.log('Error [UPDATE_USER]', err)
+        console.error('Error [UPDATE_USER]', err)
         throw err;
     }
 }
