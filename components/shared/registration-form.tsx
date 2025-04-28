@@ -7,21 +7,46 @@ import { Container } from "./container"
 import { FormProvider, useForm } from "react-hook-form"
 import { formRegisterSchema, TFormRegisterValues } from "@/constants/zod-schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { registerUser } from "@/app/server-actions"
+import toast from "react-hot-toast"
+import { redirect } from "next/navigation"
 
 interface Props {
     className?: string
 }
 
 export const RegistrationForm: React.FC<Props> = ({ className }) => {
-        const form = useForm<TFormRegisterValues>({
-            resolver: zodResolver(formRegisterSchema),
-            defaultValues: {
-                email: '',
-                password: '',
-                name: '',
-                confirmPassword: '',
-            }
-        })
+    const form = useForm<TFormRegisterValues>({
+        resolver: zodResolver(formRegisterSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+            name: '',
+            confirmPassword: '',
+        }
+    })
+
+    const onSubmit = async (user: TFormRegisterValues) => {
+        try {
+            await registerUser({
+                email: user.email,
+                name: user.name,
+                password: user.password,
+            });
+
+            toast.success('Регистрация успешна 📝. Вам отправлено письмо для подтверждения аккаунта', {
+                icon: '✅',
+            });
+        } catch (error) {
+            return toast.error('Пользователь с такой почтой уже существует', {
+                icon: '❌',
+            });
+        }
+        finally {
+            redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
+        } // TODO вместо этого сюда можно вставить перекидывание на страницу с вводом кода из почты вручную, логику для которой нужно написать
+    }
+
     return (
         <Container>
             <div className={cn("flex flex-col gap-6", className)}>
@@ -34,7 +59,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                     </CardHeader>
                     <CardContent>
                         <FormProvider {...form}>
-                            <form>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <div className="flex flex-col gap-6">
                                     <FormInput label='Имя' name='name' required type="text" />
                                     <FormInput label='Email' name='email' required type="email" />
