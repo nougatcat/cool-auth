@@ -40,7 +40,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                 password: user.password,
             });
 
-            toast.success('Регистрация успешна 📝. Вам отправлено письмо для подтверждения аккаунта', {
+            toast.success('Регистрация успешна 📝.', {
                 icon: '✅',
             });
             redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
@@ -50,9 +50,6 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                 icon: '❌',
             });
         }
-        // finally {
-        //     redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
-        // } // TODO вместо этого сюда можно вставить перекидывание на страницу с вводом кода из почты вручную, логику для которой нужно написать
     }
 
     return (

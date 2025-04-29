@@ -14,4 +14,4 @@ export const VerificationUserTemplate: React.FC<Props> = ({ code }) => {
     );
 };
 
-// TODO поменять потом адрес на сайт вместо локалхоста
+///// TODO поменять потом адрес на сайт вместо локалхоста

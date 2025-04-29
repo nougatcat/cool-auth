@@ -1,8 +1,7 @@
 
 import { AuthOptions } from "next-auth"
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { compare, hashSync } from 'bcrypt';
-import { UserRole } from '@prisma/client';
+import { compare } from 'bcrypt';
 import { prisma } from "@/prisma/prisma-client";
 
 export const authOptions: AuthOptions = {
@@ -30,9 +29,10 @@ export const authOptions: AuthOptions = {
                 if (!isPasswordValid) {
                     return null
                 }
-                if (!findUser.verified) { // пароль верен, но акк не активирован
-                    return null
-                }
+                // ! необходим свой домен для Resend, иначе письмо не будет отправлено и verified не будет ни у кого
+                // if (!findUser.verified) { // пароль верен, но акк не активирован
+                //     return null
+                // }
                 return {
                     id: findUser.id,
                     email: findUser.email,
@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
     callbacks: {
         // функция контроля за авторизацией (тут нужно прописывать поведение для провайдеров). Если провайдеров нет, то эта функция необязательна, но я все равно ее написал
         async signIn({ account }) {
-            // TODO логику 2фа возможно можно прописать именно здесь
+            // TODO логику 2фа возможно можно прописать именно здесь. Для 2fa нужен Resend. Для Resend нужен домен. Иначе он работает только с моей почтой
             try {
                 if (account?.provider === 'credentials') { //если вход по емаил и паролю, то выходим из функции и возвращаем true (т.е. разрешаем вход)
                     return true

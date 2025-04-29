@@ -1,12 +1,12 @@
 // server actions
 'use server'
-import { VerificationUserTemplate } from "@/components/shared/email-template/verification-user"
+// import { VerificationUserTemplate } from "@/components/shared/email-template/verification-user"
+// import { ReactNode } from "react"
+// import { sendEmail } from "@/lib/send-email"
 import { getUserSession } from "@/lib/get-user-session"
-import { sendEmail } from "@/lib/send-email"
 import { prisma } from "@/prisma/prisma-client"
 import { Prisma } from "@prisma/client"
 import { hashSync } from "bcrypt"
-import { ReactNode } from "react"
 
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
     try {
@@ -53,21 +53,22 @@ export async function registerUser(body: Prisma.UserCreateInput) {
         })
 
         // генерим код подтверждения почты
-        const code = Math.floor(10000 + Math.random() * 90000).toString()
+        // ! необходим свой домен для RESEND, иначе письмо не будет отправлено
+        // const code = Math.floor(10000 + Math.random() * 90000).toString()
 
-        await prisma.verificationCode.create({
-            data: {
-                code,
-                userId: createdUser.id
-            }
-        })
+        // await prisma.verificationCode.create({
+        //     data: {
+        //         code,
+        //         userId: createdUser.id
+        //     }
+        // })
 
-        await sendEmail(createdUser.email,
-            'Cool Auth / 📝 Подтверждение регистрации', VerificationUserTemplate({
-                code
-            }) as ReactNode)
+        // await sendEmail(createdUser.email,
+        //     'Cool Auth / 📝 Подтверждение регистрации', VerificationUserTemplate({
+        //         code
+        //     }) as ReactNode)
     } catch (err) {
         console.log('Error [REGISTER_USER]', err)
-        throw err //! если этого не сделать, то вызов этого экшена не увидит ошибку
+        throw err //? если этого не сделать, то вызов этого экшена не увидит ошибку
     }
 }

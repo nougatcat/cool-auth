@@ -70,7 +70,7 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                                 <div className="flex flex-col gap-6">
                                     <FormInput label='Email' name='email' required type="email" />
                                     <FormInput label='Пароль' name='password' required type="password" />
-                                    {/* // TODO: Добавить сброс пароля  <div className="flex items-center"> <a href="#" className="ml-auto inline-block text-sm underline-offset-4 hover:underline"> <s>Забыли пароль?</s> </a> </div>*/}
+                                    {/* // TODO: Добавить сброс пароля. Для этого нужен Resend, к которому у меня нет домена  <div className="flex items-center"> <a href="#" className="ml-auto inline-block text-sm underline-offset-4 hover:underline"> <s>Забыли пароль?</s> </a> </div>*/}
                                     <HCaptcha
                                         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
                                         // onVerify={(token) => console.log(token)}
