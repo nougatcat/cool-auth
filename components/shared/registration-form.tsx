@@ -12,8 +12,6 @@ import toast from "react-hot-toast"
 import React from "react"
 import HCaptcha from "@hcaptcha/react-hcaptcha"
 import Link from "next/link"
-import { isRedirectError } from "next/dist/client/components/redirect-error"
-import { redirect } from "next/navigation"
 
 interface Props {
     className?: string
