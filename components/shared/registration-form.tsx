@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 import { redirect } from "next/navigation"
 import React from "react"
 import HCaptcha from "@hcaptcha/react-hcaptcha"
+import Link from "next/link"
 
 interface Props {
     className?: string
@@ -83,7 +84,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                 </div>
                                 <div className="mt-4 text-center text-sm">
                                     Есть аккаунт?{" "}
-                                    <a href="/" className="underline underline-offset-4">Войти</a>
+                                    <Link href="/" className="underline underline-offset-4">Войти</Link>
                                 </div>
                             </form>
                         </FormProvider>

@@ -15,6 +15,7 @@ import { redirect } from "next/navigation"
 
 import HCaptcha from '@hcaptcha/react-hcaptcha'
 import React from "react"
+import Link from "next/link"
 
 interface Props {
     className?: string
@@ -82,7 +83,7 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                                 </div>
                                 <div className="mt-4 text-center text-sm">
                                     Нет аккаунта?{" "}
-                                    <a href="/signup" className="underline underline-offset-4">Создать аккаунт</a>
+                                    <Link href="/signup" className="underline underline-offset-4">Создать аккаунт</Link>
                                 </div>
                             </form>
                         </FormProvider>
