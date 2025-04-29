@@ -44,6 +44,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
             });
             redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
         } catch (error) {
+            console.log('Error [REGISTER]', error)
             return toast.error('Пользователь с такой почтой уже существует', {
                 icon: '❌',
             });
@@ -79,6 +80,10 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                         ref={captchaRef}
                                     />
                                     <Button disabled={buttonDisabled} type="submit" className="w-full">Зарегистрироваться</Button>
+                                </div>
+                                <div className="mt-4 text-center text-sm">
+                                    Есть аккаунт?{" "}
+                                    <a href="/" className="underline underline-offset-4">Войти</a>
                                 </div>
                             </form>
                         </FormProvider>

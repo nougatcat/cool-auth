@@ -45,7 +45,7 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                 icon: '✅',
             })
         } catch (error) {
-            // console.error('Error [LOGIN}',error)
+            console.log('Error [LOGIN]',error)
             toast.error('Не удалось войти в аккаунт', {
                 icon: '❌',
             })

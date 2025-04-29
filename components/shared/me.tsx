@@ -11,7 +11,6 @@ import {
 import { Container } from "./container"
 
 import { signOut } from 'next-auth/react';
-import { redirect } from "next/navigation";
 import { User } from "@prisma/client"
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -52,6 +51,7 @@ export const Me: React.FC<Props> = ({ user, className }) => {
                 icon: '✅',
             });
         } catch (error) {
+            console.log('Error [ME]', error)
             return toast.error('Ошибка при обновлении данных', {
                 icon: '❌',
             });

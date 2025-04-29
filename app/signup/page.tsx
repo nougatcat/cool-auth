@@ -1,5 +1,5 @@
 'use client'
-import { Container, RegistrationForm } from "@/components/shared";
+import { RegistrationForm } from "@/components/shared";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
