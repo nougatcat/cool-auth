@@ -24,7 +24,7 @@ interface Props {
 export const LoginForm: React.FC<Props> = ({ className }) => {
 
     const captchaRef = React.useRef(null) //необходимо для работы капчи
-    const [buttonDisabled, setbuttonDisabled] = React.useState(true)
+    const [captchaFailed, setCaptchaFailed] = React.useState(true)
 
     const form = useForm<TFormLoginValues>({
         resolver: zodResolver(formLoginSchema),
@@ -34,6 +34,11 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
         }
     })
     const onSubmit = async (data: TFormLoginValues) => {
+        if (captchaFailed) {
+            return toast.error('Капча не пройдена', {
+                icon: '❌',
+            })
+        }
         try {
             const resp = await signIn('credentials', {
                 ...data,
@@ -46,8 +51,8 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                 icon: '✅',
             })
         } catch (error) {
-            console.log('Error [LOGIN]',error)
-            toast.error('Не удалось войти в аккаунт', {
+            console.log('Error [LOGIN]', error)
+            toast.error('Неправильная почта или пароль', {
                 icon: '❌',
             })
         } finally {
@@ -74,10 +79,11 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                                     <HCaptcha
                                         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
                                         // onVerify={(token) => console.log(token)}
-                                        onVerify={() => setbuttonDisabled(false)}
+                                        onVerify={() => setCaptchaFailed(false)}
+                                        onExpire={() => setCaptchaFailed(true)}
                                         ref={captchaRef}
                                     />
-                                    <Button disabled={buttonDisabled} type="submit" loading={form.formState.isSubmitting} className="w-full">
+                                    <Button type="submit" loading={form.formState.isSubmitting} className="w-full">
                                         Войти
                                     </Button>
                                 </div>

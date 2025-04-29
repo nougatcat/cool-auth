@@ -9,10 +9,11 @@ import { formRegisterSchema, TFormRegisterValues } from "@/constants/zod-schemas
 import { zodResolver } from "@hookform/resolvers/zod"
 import { registerUser } from "@/app/server-actions"
 import toast from "react-hot-toast"
-import { redirect } from "next/navigation"
 import React from "react"
 import HCaptcha from "@hcaptcha/react-hcaptcha"
 import Link from "next/link"
+import { isRedirectError } from "next/dist/client/components/redirect-error"
+import { redirect } from "next/navigation"
 
 interface Props {
     className?: string
@@ -20,7 +21,7 @@ interface Props {
 
 export const RegistrationForm: React.FC<Props> = ({ className }) => {
     const captchaRef = React.useRef(null) //необходимо для работы капчи
-    const [buttonDisabled, setbuttonDisabled] = React.useState(true)
+    const [captchaFailed, setCaptchaFailed] = React.useState(true)
 
     const form = useForm<TFormRegisterValues>({
         resolver: zodResolver(formRegisterSchema),
@@ -33,22 +34,25 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
     })
 
     const onSubmit = async (user: TFormRegisterValues) => {
+        if (captchaFailed) {
+            return toast.error('Капча не пройдена', {
+                icon: '❌',
+            })
+        }
         try {
             await registerUser({
                 email: user.email,
                 name: user.name,
                 password: user.password,
             });
-
             toast.success('Регистрация успешна 📝.', {
                 icon: '✅',
             });
-            redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
         } catch (error) {
             console.log('Error [REGISTER]', error)
             return toast.error('Пользователь с такой почтой уже существует', {
                 icon: '❌',
-            });
+            })
         }
     }
 
@@ -74,10 +78,11 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                         placeholder="Минимум  символов" />
                                     <HCaptcha
                                         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
-                                        onVerify={() => setbuttonDisabled(false)}
+                                        onVerify={() => setCaptchaFailed(false)}
+                                        onExpire={() => setCaptchaFailed(true)}
                                         ref={captchaRef}
                                     />
-                                    <Button disabled={buttonDisabled} type="submit" className="w-full">Зарегистрироваться</Button>
+                                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
                                 </div>
                                 <div className="mt-4 text-center text-sm">
                                     Есть аккаунт?{" "}
