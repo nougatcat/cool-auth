@@ -78,6 +78,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
                                         onVerify={() => setCaptchaFailed(false)}
                                         onExpire={() => setCaptchaFailed(true)}
+                                        size="compact"
                                         ref={captchaRef}
                                     />
                                     <Button type="submit" className="w-full">Зарегистрироваться</Button>

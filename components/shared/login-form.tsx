@@ -81,6 +81,7 @@ export const LoginForm: React.FC<Props> = ({ className }) => {
                                         // onVerify={(token) => console.log(token)}
                                         onVerify={() => setCaptchaFailed(false)}
                                         onExpire={() => setCaptchaFailed(true)}
+                                        size="compact"
                                         ref={captchaRef}
                                     />
                                     <Button type="submit" loading={form.formState.isSubmitting} className="w-full">
