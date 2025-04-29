@@ -23,7 +23,7 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
             data: {
                 email: body.email,
                 name: body.name,
-                password: hashSync(body.password as string,10)
+                password: hashSync(body.password as string, 10)
             }
         })
     } catch (err) {
@@ -41,9 +41,6 @@ export async function registerUser(body: Prisma.UserCreateInput) {
         })
 
         if (user) {
-            if (!user.verified) {
-                throw new Error('Почта не подтверждена');
-            }
             throw new Error('Пользователь с такой почтой уже существует');
         }
 
@@ -51,7 +48,7 @@ export async function registerUser(body: Prisma.UserCreateInput) {
             data: {
                 name: body.name,
                 email: body.email,
-                password: hashSync(body.password,10)
+                password: hashSync(body.password, 10)
             }
         })
 
@@ -65,11 +62,12 @@ export async function registerUser(body: Prisma.UserCreateInput) {
             }
         })
 
-        await sendEmail(createdUser.email, 
+        await sendEmail(createdUser.email,
             'Cool Auth / 📝 Подтверждение регистрации', VerificationUserTemplate({
                 code
-        }) as ReactNode)
+            }) as ReactNode)
     } catch (err) {
         console.log('Error [REGISTER_USER]', err)
+        throw err //! если этого не сделать, то вызов этого экшена не увидит ошибку
     }
 }

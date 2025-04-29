@@ -37,14 +37,15 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
             toast.success('Регистрация успешна 📝. Вам отправлено письмо для подтверждения аккаунта', {
                 icon: '✅',
             });
+            redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
         } catch (error) {
             return toast.error('Пользователь с такой почтой уже существует', {
                 icon: '❌',
             });
         }
-        finally {
-            redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
-        } // TODO вместо этого сюда можно вставить перекидывание на страницу с вводом кода из почты вручную, логику для которой нужно написать
+        // finally {
+        //     redirect('/') //чтобы перезагрузить страницу и показало окно что вход успешен
+        // } // TODO вместо этого сюда можно вставить перекидывание на страницу с вводом кода из почты вручную, логику для которой нужно написать
     }
 
     return (
@@ -64,9 +65,9 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                     <FormInput label='Имя' name='name' required type="text" />
                                     <FormInput label='Email' name='email' required type="email" />
                                     <FormInput label='Пароль' name='password' required type="password"
-                                        placeholder="Минимум 6 символов" />
+                                        placeholder="Минимум 8 символов" />
                                     <FormInput label='Пароль повторно' name='confirmPassword' required type="password"
-                                        placeholder="Минимум 6 символов" />
+                                        placeholder="Минимум  символов" />
                                     <Button type="submit" className="w-full">Зарегистрироваться</Button>
                                 </div>
                             </form>
