@@ -16,6 +16,8 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^1.12.0",
+    "@hcaptcha/types": "^1.0.4",
     "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.6.0",
     "@radix-ui/react-checkbox": "^1.1.5",

@@ -10,12 +10,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { registerUser } from "@/app/server-actions"
 import toast from "react-hot-toast"
 import { redirect } from "next/navigation"
+import React from "react"
+import HCaptcha from "@hcaptcha/react-hcaptcha"
 
 interface Props {
     className?: string
 }
 
 export const RegistrationForm: React.FC<Props> = ({ className }) => {
+    const captchaRef = React.useRef(null) //необходимо для работы капчи
+    const [buttonDisabled, setbuttonDisabled] = React.useState(true)
+
     const form = useForm<TFormRegisterValues>({
         resolver: zodResolver(formRegisterSchema),
         defaultValues: {
@@ -68,7 +73,12 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                         placeholder="Минимум 8 символов" />
                                     <FormInput label='Пароль повторно' name='confirmPassword' required type="password"
                                         placeholder="Минимум  символов" />
-                                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
+                                    <HCaptcha
+                                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
+                                        onVerify={() => setbuttonDisabled(false)}
+                                        ref={captchaRef}
+                                    />
+                                    <Button disabled={buttonDisabled} type="submit" className="w-full">Зарегистрироваться</Button>
                                 </div>
                             </form>
                         </FormProvider>

@@ -1,23 +1,30 @@
 'use client'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FormInput } from "./form-template/form-input"
 
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useSession, signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { Container } from "./container"
 import { formLoginSchema, TFormLoginValues } from "@/constants/zod-schemas"
 import toast from "react-hot-toast"
 import { redirect } from "next/navigation"
 
+import HCaptcha from '@hcaptcha/react-hcaptcha'
+import React from "react"
+
 interface Props {
     className?: string
 }
 
-export const LoginForm: React.FC<Props> = ({className}) => {
+export const LoginForm: React.FC<Props> = ({ className }) => {
+
+    const captchaRef = React.useRef(null) //необходимо для работы капчи
+    const [buttonDisabled, setbuttonDisabled] = React.useState(true)
+
     const form = useForm<TFormLoginValues>({
         resolver: zodResolver(formLoginSchema),
         defaultValues: {
@@ -62,12 +69,14 @@ export const LoginForm: React.FC<Props> = ({className}) => {
                                 <div className="flex flex-col gap-6">
                                     <FormInput label='Email' name='email' required type="email" />
                                     <FormInput label='Пароль' name='password' required type="password" />
-                                    <div className="flex items-center">
-                                        <a href="#"
-                                            className="ml-auto inline-block text-sm underline-offset-4 hover:underline"> <s>Забыли пароль?</s> </a>
-                                        {/* // TODO: Добавить сброс пароля */}
-                                    </div>
-                                    <Button type="submit" loading={form.formState.isSubmitting} className="w-full">
+                                    {/* // TODO: Добавить сброс пароля  <div className="flex items-center"> <a href="#" className="ml-auto inline-block text-sm underline-offset-4 hover:underline"> <s>Забыли пароль?</s> </a> </div>*/}
+                                    <HCaptcha
+                                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
+                                        // onVerify={(token) => console.log(token)}
+                                        onVerify={() => setbuttonDisabled(false)}
+                                        ref={captchaRef}
+                                    />
+                                    <Button disabled={buttonDisabled} type="submit" loading={form.formState.isSubmitting} className="w-full">
                                         Войти
                                     </Button>
                                 </div>
