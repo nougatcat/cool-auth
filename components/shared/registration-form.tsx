@@ -73,7 +73,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                     <FormInput label='Пароль' name='password' required type="password"
                                         placeholder="Минимум 8 символов" />
                                     <FormInput label='Пароль повторно' name='confirmPassword' required type="password"
-                                        placeholder="Минимум  символов" />
+                                        placeholder="Минимум 8 символов" />
                                     <HCaptcha
                                         sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ''}
                                         onVerify={() => setCaptchaFailed(false)}
