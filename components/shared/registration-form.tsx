@@ -81,7 +81,7 @@ export const RegistrationForm: React.FC<Props> = ({ className }) => {
                                         size="compact"
                                         ref={captchaRef}
                                     />
-                                    <Button type="submit" className="w-full">Зарегистрироваться</Button>
+                                    <Button type="submit" loading={form.formState.isSubmitting} className="w-full">Зарегистрироваться</Button>
                                 </div>
                                 <div className="mt-4 text-center text-sm">
                                     Есть аккаунт?{" "}

@@ -77,7 +77,7 @@ export const Me: React.FC<Props> = ({ user, className }) => {
                                     <FormInput type="password" name="password" label="Новый пароль" required />
                                     <FormInput type="password" name="confirmPassword" label="Повторите новый пароль" required />
 
-                                    <Button disabled={form.formState.isSubmitting} type="submit">
+                                    <Button type="submit" loading={form.formState.isSubmitting} className="w-full">
                                         Обновить данные
                                     </Button>
                                     <Button
