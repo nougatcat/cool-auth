@@ -1,8 +1,8 @@
 // import { cn } from '@/lib/utils'
-import profileIMG from '../../../public/images/profile.svg'
-import backIMG from '../../../public/images/back.svg'
-import saveIMG from '../../../public/images/save.svg'
-import binIMG from '../../../public/images/bin.svg'
+import profileIMG from '../../public/images/profile.svg'
+import backIMG from '../../public/images/back.svg'
+import saveIMG from '../../public/images/save.svg'
+import binIMG from '../../public/images/bin.svg'
 import { FancyButton, FancyContainer, FancyEditor, FancySearch, FancyTable } from '@/components/ui/docsui/'
 
 export default function Search() {
@@ -18,7 +18,7 @@ export default function Search() {
             <div className="flex justify-between mb-5 mt-5">
                 <FancyButton className='bg-[#FF5050]' image={binIMG} text='Удалить' dist='/create' />
                 <div className='flex'>
-                    <div className='rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>Посмотреть историю редактирования</div>
+                    <div className='rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>Настроить права доступа к документу</div>
                 </div>
                 <FancyButton className='bg-[#BCFFB8]' image={saveIMG} text='Сохранить' dist='/create' />
             </div>

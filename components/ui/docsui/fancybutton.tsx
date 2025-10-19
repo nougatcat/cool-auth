@@ -11,6 +11,8 @@ interface Props {
     backwards?: boolean;
 }
 
+// TODO вместо Link должно быть другое действие, иначе кнопка бесполезна для отправки запросов на сервер
+
 export const FancyButton: React.FC<Props> = ({ className, image, text, dist, backwards }) => {
     return (
         !backwards 
