@@ -33,31 +33,3 @@
 .row_green {
     background-color: #DDFFDB;
 }
-
-.button_create {
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #BCFFB8;
-    min-width: 150px;
-
-    :hover {
-        cursor: pointer;
-    }
-}
-.button_search {
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #E7E7E7;
-    color: #515151;
-    min-width: 400px;
-    text-align: center;
-}
-.button_profile {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    padding: 10px;
-    min-width: 150px;
-    :hover {
-        cursor: pointer;
-    }
-}
