@@ -28,6 +28,7 @@ model User {
 
 
     documents Document[]
+    docHistory DocHistory[]
 }
 
 model VerificationCode {
@@ -85,7 +86,8 @@ model DocHistory {
 
     id Int @id @default(autoincrement())
 
-    editedBy String
+    editedBy User @relation(fields: [editorId], references: [id])
+    editorId Int
     document Document @relation(fields: [documentId], references: [id])
     documentId Int
 
