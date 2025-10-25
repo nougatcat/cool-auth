@@ -80,7 +80,7 @@ async function main() {
 main()
     .then(async () => {
         await prisma.$disconnect()
-        process.exit(0); //! без этой строки сид может зависнуть
+        process.exit(0); //! без этой строки сид может зависнуть, хотя он и так может зависнуть, если использовать Neon для хранения бд
     })
     .catch(async (e) => {
         console.error(e)

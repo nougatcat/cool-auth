@@ -79,6 +79,8 @@ model Document {
     adminPerms DocPerms @default(NONE)
     userPerms DocPerms @default(NONE)
 
+    createdAt DateTime @default(now())
+
     docHistory DocHistory[]
 }
 
