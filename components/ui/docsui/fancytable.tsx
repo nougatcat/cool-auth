@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const FancyTable: React.FC<Props> = ({ className, titles, rows, user}) => {
-    const greenRow = 'bg-[#DDFFDB]'
+    const greenRow = 'bg-[#DDFFDB]' //стилизовка строки
     return (
         <div className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]'>
             <div className='bg-[#515151] text-[#E7E7E7] rounded-[5px_5px_0_0] font-semibold flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px]'>
@@ -29,7 +29,7 @@ export const FancyTable: React.FC<Props> = ({ className, titles, rows, user}) =>
                             <div className='w-[20%]'>
                                 {
                                     user.id === item.authorId
-                                        ? "RW + Авторство"
+                                        ? <p className='text-green-600'>RW Автор</p>
                                         : user.role === 'ADMIN'
                                             ? item.adminPerms
                                             : item.userPerms
