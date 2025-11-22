@@ -1,5 +1,6 @@
 // server actions
 'use server'
+// ? Тут можно реализовать аналоги POST и PATCH запросов вместо реализации через /api
 // import { VerificationUserTemplate } from "@/components/shared/email-template/verification-user"
 // import { ReactNode } from "react"
 // import { sendEmail } from "@/lib/send-email"
@@ -74,5 +75,3 @@ export async function registerUser(body: Prisma.UserCreateInput) {
     }
 }
 
-
-// TODO Тут 

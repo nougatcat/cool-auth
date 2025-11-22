@@ -28,17 +28,39 @@ async function up() {
             {
                 authorId: 2,
                 content: 'Блаблаблаблаблаблаблаблаблаблаблабла ьалаб лаба ла лааб ал аб а',
-                title: 'Мой документ RW',
+                title: 'документ админа RW',
                 adminPerms: 'RW',
                 userPerms: 'READ',
             },
             {
                 authorId: 2,
                 content: 'aaa aa aa aa Блаблаблаблаблаблаблаблаблаблаблабла ьалаб лаба ла лааб ал аб а',
-                title: 'Мой документ R',
+                title: 'Мой документ админа R',
+                adminPerms: 'READ',
+                userPerms: 'RW',
+            },
+            {
+                authorId: 1,
+                content: 'aaa aa aa aa Блаблаблаблаблаблаблаблаблаблаблабла ьалаб лаба ла лааб ал аб а',
+                title: 'документ юзера R',
                 adminPerms: 'READ',
                 userPerms: 'READ',
             },
+            {
+                authorId: 1,
+                content: 'aaa aa aa aa Блаблаблаблаблаблаблаблаблаблаблабла ьалаб лаба ла лааб ал аб а',
+                title: 'документ юзера RW',
+                adminPerms: 'RW',
+                userPerms: 'READ',
+            },
+            {
+                authorId: 1,
+                content: 'aaa aa aa aa Блаблаблаблаблаблаблаблаблаблаблабла ьалаб лаба ла лааб ал аб а',
+                title: 'Секретный документ юзера',
+                adminPerms: 'NONE',
+                userPerms: 'NONE',
+            },
+
         ]
     });
     await prisma.docHistory.createMany({

@@ -8,6 +8,10 @@ import { FancyButton, FancyContainer, FancyEditor, FancySearch, FancyTable } fro
 export default function Search() {
     return (
         <FancyContainer>
+            <h1>НЕ СООТВЕТСВУЕТ ДИЗАЙНУ. СТРАНИЦУ ПОЛНОСТЬЮ ПЕРЕПИСАТЬ</h1>
+            <h1>НЕ СООТВЕТСВУЕТ ДИЗАЙНУ. СТРАНИЦУ ПОЛНОСТЬЮ ПЕРЕПИСАТЬ</h1>
+            <h1>НЕ СООТВЕТСВУЕТ ДИЗАЙНУ. СТРАНИЦУ ПОЛНОСТЬЮ ПЕРЕПИСАТЬ</h1>
+            <h1>НЕ СООТВЕТСВУЕТ ДИЗАЙНУ. СТРАНИЦУ ПОЛНОСТЬЮ ПЕРЕПИСАТЬ</h1>
             <div className="flex justify-between mb-5">
                 <FancyButton className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' backwards image={backIMG} text='К поиску' dist='/search' />
                 <FancyButton className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={profileIMG} text='Профиль' dist='/profile' />
