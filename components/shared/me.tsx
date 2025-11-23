@@ -18,6 +18,7 @@ import { formRegisterSchema, TFormRegisterValues } from "@/constants/zod-schemas
 import toast from "react-hot-toast"
 import { FormInput } from "./form-template/form-input"
 import { updateUserInfo } from "@/app/server-actions"
+import Link from "next/link"
 
 interface Props {
     className?: string
@@ -87,6 +88,14 @@ export const Me: React.FC<Props> = ({ user, className }) => {
                                         className="w-full">
                                         Выйти
                                     </Button>
+                                    <Link href={'/search'}>
+                                        <Button
+                                            type="button"
+                                            variant="secondary"
+                                            className="w-full bg-[#BCFFB8]">
+                                            Перейти к документам
+                                        </Button>
+                                    </Link>
                                 </div>
                             </form>
                         </FormProvider>
