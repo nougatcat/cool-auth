@@ -6,18 +6,26 @@ import settingsIMG from '../../public/images/settings.svg'
 import backIMG from '../../public/images/back.svg'
 import { FancyButton, FancyContainer, FancySearch, ProfileTable } from '@/components/ui/docsui/'
 import React from 'react'
+import { Spinner } from '@/components/ui/spinner'
 
 export default function Search() {
+    const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const [rows, setRows] = React.useState<[]>([]);
     React.useEffect(() => {
         const fetchData = async () => {
-            const data = await Api.myDoc.getMyDocuments();
-            setRows(data);
+            try {
+                const data = await Api.myDoc.getMyDocuments();
+                setRows(data);
+            } catch (e) {
+                console.log("Ошибка загрузки документа:", e);
+            } finally {
+                setIsLoading(false);
+            }
         };
         fetchData();
     }, [])
-    // console.log(rows)
-    // console.log(user)
+
+    if (isLoading) return <Spinner />
 
     return (
         <FancyContainer>

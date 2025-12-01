@@ -65,3 +65,5 @@ export async function GET() {
         return NextResponse.json({ message: '[USER_GET] Server error' }, { status: 500 })
     }
 }
+
+// TODO title и content документа лучше шифровать, чтобы при сливе бд нельзя было слить документы. Делать это нужно в post и patch запросах. На данном этапе разработки необязательно

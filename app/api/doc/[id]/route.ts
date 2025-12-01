@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic' //! есть баг с асинхронн
 
 export async function GET(request: Request, {params} : {params: Promise <{id: string}>}) { //! Начиная с версии next js 15 нужно оборачивать тип в промис и прописывать request: Request
     try {
-        const {id} = await params
+        const {id} = await params //!буквально фикс который предлагает next js при переходе на 15 версию, на 14 было не нужно. В api нужно еще request: Request писать, в page компонентах не нужно
         const id_number = Number(id)
         const user = await getUserSession()
         if (!user) {
