@@ -1,5 +1,6 @@
 
 import { DocumentApi } from '@/services/all-doc';
+import Link from 'next/link';
 
 interface Props {
     className?: string;
@@ -18,33 +19,35 @@ export const ProfileTable: React.FC<Props> = ({ className, titles, rows, }) => {
             {
                 rows.map((item: DocumentApi, index: number) => {
                     return (
-                        <div key={index} className={'border-b border-black flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px] cursor-pointer bg-[#DDFFDB]'}>
-                            <div className='w-[60%]'>{item.title}</div>
-                            <div className='w-[20%]'>
-                                {
-                                    item.adminPerms === 'NONE'
-                                    ? 'Только мне'
-                                    : item.userPerms === 'NONE'
-                                        ? 'Админам'
-                                        : 'Всем'
-                                }
-                            </div>
-                            <div className='w-[20%]'>
-                                {
-                                    item.adminPerms === 'NONE' && item.userPerms === 'NONE'
-                                    ? 'Только мне'
-                                    : item.adminPerms === 'READ' && item.userPerms === 'NONE'
-                                        ? 'А: R, П: нет'
-                                        : item.adminPerms === 'RW' && item.userPerms === 'NONE'
-                                            ? 'А: RW, П: нет'
-                                            : item.adminPerms === 'READ' && item.userPerms === 'READ'
-                                                ? 'А: R, П: R'
-                                                :  item.adminPerms === 'RW' && item.userPerms === 'READ'
-                                                    ? 'А: RW, П: R'
-                                                    : 'А: RW, П: RW'
-                                }
+                        <Link href={'/document/' + item.id}>
+                            <div key={index} className={'border-b border-black flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px] cursor-pointer bg-[#DDFFDB]'}>
+                                <div className='w-[60%]'>{item.title}</div>
+                                <div className='w-[20%]'>
+                                    {
+                                        item.adminPerms === 'NONE'
+                                            ? 'Только мне'
+                                            : item.userPerms === 'NONE'
+                                                ? 'Админам'
+                                                : 'Всем'
+                                    }
                                 </div>
-                        </div>
+                                <div className='w-[20%]'>
+                                    {
+                                        item.adminPerms === 'NONE' && item.userPerms === 'NONE'
+                                            ? 'Только мне'
+                                            : item.adminPerms === 'READ' && item.userPerms === 'NONE'
+                                                ? 'А: R, П: нет'
+                                                : item.adminPerms === 'RW' && item.userPerms === 'NONE'
+                                                    ? 'А: RW, П: нет'
+                                                    : item.adminPerms === 'READ' && item.userPerms === 'READ'
+                                                        ? 'А: R, П: R'
+                                                        : item.adminPerms === 'RW' && item.userPerms === 'READ'
+                                                            ? 'А: RW, П: R'
+                                                            : 'А: RW, П: RW'
+                                    }
+                                </div>
+                            </div>
+                        </Link>
                     )
                 })
             }
