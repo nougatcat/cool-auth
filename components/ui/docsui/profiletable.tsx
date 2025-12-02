@@ -19,8 +19,8 @@ export const ProfileTable: React.FC<Props> = ({ className, titles, rows, }) => {
             {
                 rows.map((item: DocumentApi, index: number) => {
                     return (
-                        <Link href={'/document/' + item.id}>
-                            <div key={index} className={'border-b border-black flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px] cursor-pointer bg-[#DDFFDB]'}>
+                        <Link key={index} href={'/document/' + item.id}>
+                            <div className={'border-b border-black flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px] cursor-pointer bg-[#DDFFDB]'}>
                                 <div className='w-[60%]'>{item.title}</div>
                                 <div className='w-[20%]'>
                                     {

@@ -75,3 +75,31 @@ export async function registerUser(body: Prisma.UserCreateInput) {
     }
 }
 
+////////////////////////////////////////////////////////
+//? \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ часть, связанная с документооборотом
+/////////////////////////////////////////////////////////
+export async function createDocument() { //вместо POST запроса. PATCH и DELETE тоже можно переделать под это, но могут не заработать параметры из url
+    try {
+        const user = await getUserSession()
+
+        if (!user) {
+            throw new Error('Вы не авторизованы')
+        }
+
+        await prisma.document.create({
+            data: {
+                title: 'Мой новый документ',
+                content: 'Только что созданный документ',
+                adminPerms: "NONE",
+                userPerms: "NONE",
+                authorId: Number(user.id)
+            }
+        })
+
+    } catch (err) {
+        console.log('Error [CREATE_DOCUMENT]', err)
+        throw err //? если этого не сделать, то вызов этого экшена не увидит ошибку
+    }
+}
+
+// PATCH и DELETE прописаны в api/doc/id
