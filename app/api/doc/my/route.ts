@@ -40,7 +40,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             }
         })
         if (!document) {
-            return NextResponse.json({ error: 'Документ не найден' })
+            return NextResponse.json({ message: 'Документ не найден' }, {status: 404})
         }
         if (document.authorId === id_user) {
             await prisma.document.update({
