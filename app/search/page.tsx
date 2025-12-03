@@ -3,7 +3,7 @@
 import { Api } from '@/services/api-client'
 import createIMG from '../../public/images/create.svg'
 import profileIMG from '../../public/images/profile.svg'
-import { FancyButton, FancyContainer, FancySearch, SearchTable } from '@/components/ui/docsui/'
+import { FancyLink, FancyContainer, FancySearch, SearchTable } from '@/components/ui/docsui/'
 import React from 'react'
 import { Spinner } from '@/components/ui/spinner'
 
@@ -34,9 +34,9 @@ export default function Search() {
     return (
         <FancyContainer>
             <div className="flex justify-between mb-5">
-                <FancyButton className='bg-[#BCFFB8]' image={createIMG} text='Создать' dist='/create' />
+                <FancyLink className='bg-[#BCFFB8]' image={createIMG} text='Создать' dist='/create' />
                 <FancySearch />
-                <FancyButton className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={profileIMG} text='Профиль' dist='/profile' />
+                <FancyLink className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={profileIMG} text='Профиль' dist='/profile' />
             </div>
 
             <SearchTable rows={rows} user={user} titles={['Название', 'Владелец', 'Права доступа']} />

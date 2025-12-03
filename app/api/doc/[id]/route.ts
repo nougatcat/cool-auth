@@ -89,7 +89,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             }
         })
         if (!document) {
-            return NextResponse.json({ message: 'Документ не найден' }, {status: 404})
+            return NextResponse.json({ message: 'Документ не найден' }, { status: 404 })
         }
         if ((document.adminPerms === 'RW' && user.role === 'ADMIN') || (document.userPerms === 'RW') || (document.authorId === id_user)) {
             await prisma.document.update({
@@ -112,18 +112,33 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params
-        const id_number = Number(id)
+        const id_doc = Number(id)
         const user = await getUserSession()
         if (!user) {
             return NextResponse.json({ message: 'Вы не авторизованы' }, { status: 401 })
         }
-
-        await prisma.document.delete({
+        const id_user = Number(user.id)
+        const document = await prisma.document.findFirst({
             where: {
-                id: id_number
-            },
+                id: id_doc
+            }
         })
-        return NextResponse.json({ message: 'Успешно удалено' }, { status: 200 })
+        if (!document) {
+            return NextResponse.json({ message: 'Документ не найден' }, { status: 404 })
+        }
+        if ((document.adminPerms === 'RW' && user.role === 'ADMIN') || (document.userPerms === 'RW') || (document.authorId === id_user)) {
+            await prisma.docHistory.deleteMany({
+                where: {
+                    documentId: id_doc,
+                }
+            })
+            await prisma.document.delete({
+                where: {
+                    id: id_doc
+                },
+            })
+            return NextResponse.json({ message: 'Успешно удалено' }, { status: 200 })
+        } else return NextResponse.json({ message: 'Нет доступа к редактированию документа' }, { status: 403 })
     } catch (err) {
         console.log('[DELETE_DOCUMENT] Server error', err);
         return NextResponse.json({ message: 'Не удалось удалить документ' }, { status: 500 })

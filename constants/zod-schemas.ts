@@ -36,6 +36,32 @@ export const formRegisterSchema = z.object({
 export type TFormLoginValues = z.infer<typeof formLoginSchema>
 export type TFormRegisterValues = z.infer<typeof formRegisterSchema>
 
+////////////////////////////////////////////////////////////
+//? Часть, связанаая с документами
+
+/**
+ * @param title
+ * @param content
+ */
+export const formDocumentSchema = z.object({
+    title: z.string(),
+    content: z.string()
+})
+export type TFormDocumentValues = z.infer<typeof formDocumentSchema>
+
+/**
+ * @param adminPerms
+ * @param userPerms
+ */
+export const formPermsSchema = z.object({
+    adminPerms: z.string(),
+    userPerms: z.string()
+})
+export type TFormPermsValues = z.infer<typeof formPermsSchema>
+
+
+
+
 
 // refine - уточнить
 // infer - вывести

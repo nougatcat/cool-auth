@@ -21,4 +21,4 @@ export const FancyEditor: React.FC<Props> = ({ className, author, title, content
     );
 };
 
-//TODO переделать это в форму
+//TODO компонент не используется, нужно удалить
