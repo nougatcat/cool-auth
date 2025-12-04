@@ -86,7 +86,7 @@ export async function createDocument() { //вместо POST запроса. PAT
             throw new Error('Вы не авторизованы')
         }
 
-        await prisma.document.create({
+        const document = await prisma.document.create({
             data: {
                 title: 'Мой новый документ',
                 content: 'Только что созданный документ',
@@ -95,6 +95,8 @@ export async function createDocument() { //вместо POST запроса. PAT
                 authorId: Number(user.id)
             }
         })
+
+        return document.id
 
     } catch (err) {
         console.log('Error [CREATE_DOCUMENT]', err)

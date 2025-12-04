@@ -3,9 +3,12 @@
 import { Api } from '@/services/api-client'
 import createIMG from '../../public/images/create.svg'
 import profileIMG from '../../public/images/profile.svg'
-import { FancyLink, FancyContainer, FancySearch, SearchTable } from '@/components/ui/docsui/'
+import { FancyLink, FancyButton, FancyContainer, FancySearch, SearchTable } from '@/components/ui/docsui/'
 import React from 'react'
 import { Spinner } from '@/components/ui/spinner'
+import toast from 'react-hot-toast'
+import { createDocument } from '../server-actions'
+import { useRouter } from 'next/navigation'
 
 export default function Search() {
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
@@ -26,15 +29,31 @@ export default function Search() {
         };
         fetchData();
     }, [])
-    // console.log(rows)
-    // console.log(user)
+
+    const router = useRouter();
+    const onCreate = async () => {
+        try {
+            const documentId = await createDocument()
+            const id = documentId.toString()
+            toast.success('Документ создан 📝', {
+                icon: '✅',
+            });
+            router.push('/document/' + id)
+
+        } catch (error) {
+            console.log('Error [CREATE_DOCUMENT]', error)
+            return toast.error('Ошибка при создании документа', {
+                icon: '❌',
+            });
+        }
+    };
 
     if (isLoading) return <Spinner />
 
     return (
         <FancyContainer>
             <div className="flex justify-between mb-5">
-                <FancyLink className='bg-[#BCFFB8]' image={createIMG} text='Создать' dist='/create' />
+                <FancyButton className='bg-[#BCFFB8]' image={createIMG} text='Создать' onClick={onCreate} />
                 <FancySearch />
                 <FancyLink className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={profileIMG} text='Профиль' dist='/profile' />
             </div>
