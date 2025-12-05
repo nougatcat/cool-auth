@@ -17,6 +17,7 @@ import { formDocumentSchema, TFormDocumentValues } from "@/constants/zod-schemas
 import toast from "react-hot-toast"
 import { deleteDocument, updateDocument } from '@/services/id_doc'
 import { useRouter } from 'next/navigation'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 export default function DocumentPage({ params }: { params: { id: string } }) {
 
@@ -127,9 +128,40 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
                             onClick={onDelete}
                             type="button" //если не указать, то при нажатии этой кнопки сработает и другая
                         />
-                        <div className='flex'>
-                            <div className='rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>Посмотреть историю редактирования</div>
-                        </div>
+
+                        <Dialog>
+                            {/* asChild исправляет ошибку гидрации кнопки */}
+                            <DialogTrigger asChild>
+                                <button type="button" className='rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>История редактирования и права доступа</button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle className='text-center'>Права доступа к документу</DialogTitle>
+                                    <DialogDescription>
+                                        1. Права доступа может менять только владелец документа
+                                        <br />
+                                        2. Права пользователя не могут быть больше прав админа
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <DialogClose asChild>
+                                        <FancyButton
+                                            backwards
+                                            image={backIMG}
+                                            text='Назад'
+                                            type="button"
+                                        />
+                                    </DialogClose>
+                                    <FancyButton
+                                        className='bg-[#BCFFB8]'
+                                        image={saveIMG}
+                                        text='Сохранить'
+                                        type="submit"
+                                    />
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+
                         <FancyButton
                             className='bg-[#BCFFB8]'
                             image={saveIMG}
@@ -139,6 +171,7 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
                     </div>
                 </form>
             </FormProvider>
+
         </FancyContainer>
     )
 }
