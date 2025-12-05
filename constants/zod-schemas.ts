@@ -56,6 +56,9 @@ export type TFormDocumentValues = z.infer<typeof formDocumentSchema>
 export const formPermsSchema = z.object({
     adminPerms: z.string(),
     userPerms: z.string()
+}).refine(data => !((data.userPerms === 'READ' && data.adminPerms === 'NONE') || (data.userPerms === 'RW' && data.adminPerms === 'READ') || (data.userPerms === 'RW' && data.adminPerms === 'NONE')), {
+    message: 'Права пользователей не должны быть больше, чем права админов',
+    path: ['adminPerms'] // с чем сравнивать
 })
 export type TFormPermsValues = z.infer<typeof formPermsSchema>
 

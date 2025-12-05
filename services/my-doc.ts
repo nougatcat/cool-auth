@@ -6,6 +6,6 @@ export const getMyDocuments = async () => {
     return data;
 }
 
-export const updateDocumentPerms = async (id: number, adminPerms: string, userPerms: string): Promise<Document> => {
-    return (await axiosInstance.patch<Document>('/doc/' + id, { adminPerms, userPerms})).data
+export const updateDocumentPerms = async (id_doc: number, adminPerms: string, userPerms: string): Promise<Document> => {
+    return (await axiosInstance.patch<Document>('/doc/my', { id_doc, adminPerms, userPerms})).data
 }

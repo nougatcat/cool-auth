@@ -13,13 +13,15 @@ import { DocumentApi } from '@/services/all-doc'
 
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { formDocumentSchema, TFormDocumentValues } from "@/constants/zod-schemas"
+import { formDocumentSchema, formPermsSchema, TFormDocumentValues, TFormPermsValues } from "@/constants/zod-schemas"
 import toast from "react-hot-toast"
 import { deleteDocument, updateDocument } from '@/services/id_doc'
 import { useRouter } from 'next/navigation'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { updateDocumentPerms } from '@/services/my-doc'
 
 export default function DocumentPage({ params }: { params: { id: string } }) {
+
 
     const router = useRouter();
 
@@ -28,6 +30,7 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
     const id_doc = Number(id)
     if (isNaN(id_doc)) return notFound()
 
+    const [user, setUser] = React.useState<{ name?: string, id?: number, role?: 'ADMIN' | 'USER' }>({});
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
@@ -40,17 +43,31 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
         }
     })
 
+    const formForPerms = useForm({
+        resolver: zodResolver(formPermsSchema),
+        defaultValues: {
+            adminPerms: 'Загрузка',
+            userPerms: 'Загрузка'
+        }
+    })
+
     // Подгрузка документа
     const [doc, setDoc] = React.useState<DocumentApi | null>(null);
     React.useEffect(() => {
         const fetchData = async () => {
             try {
+                const user = await Api.auth.getMe();
+                setUser(user);
                 const data = await Api.idDoc.getDocByIdFromUrl(id_doc)
                 setDoc(data);
                 // Обновляем defaultValues формы после загрузки данных
                 form.reset({
                     content: data.content,
                     title: data.title
+                })
+                formForPerms.reset({
+                    adminPerms: data.adminPerms,
+                    userPerms: data.userPerms
                 })
             } catch (e) {
                 console.log("Ошибка загрузки документа:", e);
@@ -95,6 +112,22 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
     };
 
 
+    const onSubmitPerms = async (doc: TFormPermsValues) => {
+        try {
+            await updateDocumentPerms(id_doc, doc.adminPerms, doc.userPerms)
+
+            toast.success('Данные обновлены 📝', {
+                icon: '✅',
+            });
+        } catch (error) {
+            console.log('Error [UPDATE_DOCUMENT]', error)
+            return toast.error('Ошибка при обновлении данных или у вас нет прав на запись', {
+                icon: '❌',
+            });
+        }
+    };
+
+
     return (
         <FancyContainer>
             <div className="flex justify-between mb-5">
@@ -129,12 +162,25 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
                             type="button" //если не указать, то при нажатии этой кнопки сработает и другая
                         />
 
-                        <Dialog>
-                            {/* asChild исправляет ошибку гидрации кнопки */}
-                            <DialogTrigger asChild>
-                                <button type="button" className='rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>История редактирования и права доступа</button>
-                            </DialogTrigger>
-                            <DialogContent>
+                        <FancyButton
+                            className='bg-[#BCFFB8]'
+                            image={saveIMG}
+                            text='Сохранить'
+                            type="submit"
+                        />
+                    </div>
+                </form>
+            </FormProvider>
+            {(user.id === doc.authorId) &&
+                <Dialog>
+                    <DialogTrigger asChild>
+                        {/* //TODO сделать историю редактирования */}
+                        {/* <button type="button" className='w-full rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>История редактирования и права доступа</button> */}
+                        <button type="button" className='w-full rounded-[5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[410px] text-center cursor-pointer'>Права доступа</button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <FormProvider {...formForPerms}>
+                            <form onSubmit={formForPerms.handleSubmit(onSubmitPerms)}>
                                 <DialogHeader>
                                     <DialogTitle className='text-center'>Права доступа к документу</DialogTitle>
                                     <DialogDescription>
@@ -143,7 +189,20 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
                                         2. Права пользователя не могут быть больше прав админа
                                     </DialogDescription>
                                 </DialogHeader>
-                                <DialogFooter>
+                                <label className='p-2 block w-full'>Права для пользователей</label>
+                                <select className='p-2 block w-full' {...formForPerms.register("userPerms")}>
+                                    <option value="NONE">Нет</option>
+                                    <option value="READ">Чтение</option>
+                                    <option value="RW">Чтение и запись</option>
+                                </select>
+                                <label className='p-2 block w-full'>Права для администраторов</label>
+                                <select className='p-2 block w-full' {...formForPerms.register("adminPerms")}>
+                                    <option value="NONE">Нет</option>
+                                    <option value="READ">Чтение</option>
+                                    <option value="RW">Чтение и запись</option>
+                                </select>
+                                {formForPerms.formState.errors.adminPerms && <p className="text-red-500">{formForPerms.formState.errors.adminPerms.message}</p>}
+                                <DialogFooter className='pt-2'>
                                     <DialogClose asChild>
                                         <FancyButton
                                             backwards
@@ -159,19 +218,12 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
                                         type="submit"
                                     />
                                 </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
+                            </form>
+                        </FormProvider>
+                    </DialogContent>
+                </Dialog>
+            }
 
-                        <FancyButton
-                            className='bg-[#BCFFB8]'
-                            image={saveIMG}
-                            text='Сохранить'
-                            type="submit"
-                        />
-                    </div>
-                </form>
-            </FormProvider>
-
-        </FancyContainer>
+        </FancyContainer >
     )
 }
