@@ -1,14 +1,13 @@
-
-import { DocumentApi } from '@/services/all-doc';
+import { Document } from '@prisma/client';
 import Link from 'next/link';
 
 interface Props {
-    className?: string;
-    titles: [String, String, String];
-    rows: Array<DocumentApi>
+    // className?: string;
+    titles: [string, string, string];
+    rows: Array<Document>
 }
 
-export const ProfileTable: React.FC<Props> = ({ className, titles, rows, }) => {
+export const ProfileTable: React.FC<Props> = ({ titles, rows, }) => {
     return (
         <div className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]'>
             <div className='bg-[#515151] text-[#E7E7E7] rounded-[5px_5px_0_0] font-semibold flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px]'>
@@ -17,7 +16,7 @@ export const ProfileTable: React.FC<Props> = ({ className, titles, rows, }) => {
                 <div className='w-[20%]'>{titles[2]}</div>
             </div>
             {
-                rows.map((item: DocumentApi, index: number) => {
+                rows.map((item: Document, index: number) => {
                     return (
                         <Link key={index} href={'/document/' + item.id}>
                             <div className={'border-b border-black flex justify-between min-h-[30px] w-[100%] p-[10px_20px_10px_20px] cursor-pointer bg-[#DDFFDB]'}>

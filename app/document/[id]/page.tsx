@@ -5,7 +5,7 @@ import backIMG from '../../../public/images/back.svg'
 import saveIMG from '../../../public/images/save.svg'
 import binIMG from '../../../public/images/bin.svg'
 import { FancyLink, FancyContainer, FancyButton } from '@/components/ui/docsui/'
-import { notFound } from "next/navigation"
+import { notFound, useParams } from "next/navigation"
 import { Api } from '@/services/api-client'
 import React from 'react'
 import { Spinner } from '@/components/ui/spinner'
@@ -20,15 +20,17 @@ import { useRouter } from 'next/navigation'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { updateDocumentPerms } from '@/services/my-doc'
 
-export default function DocumentPage({ params }: { params: { id: string } }) {
-
+// export default function DocumentPage({ params }: { params: { id: string } }) { //? такой подход вызывает проблемы с типизацией
+    // const { id } = React.use(params)
+    // const id_doc = Number(id)
+export default function DocumentPage() {
 
     const router = useRouter();
 
     //Получение id документа из url
-    const { id } = React.use(params)
-    const id_doc = Number(id)
-    if (isNaN(id_doc)) return notFound()
+    const params = useParams<{id: string}>()
+    const id_doc = Number(params.id)
+    
 
     const [user, setUser] = React.useState<{ name?: string, id?: number, role?: 'ADMIN' | 'USER' }>({});
 
@@ -77,6 +79,7 @@ export default function DocumentPage({ params }: { params: { id: string } }) {
         };
         fetchData();
     }, [])
+    if (isNaN(id_doc)) return notFound()
     if (isLoading) return <Spinner />
     if (doc === null) return notFound()
 

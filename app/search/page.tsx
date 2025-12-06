@@ -9,17 +9,18 @@ import { Spinner } from '@/components/ui/spinner'
 import toast from 'react-hot-toast'
 import { createDocument } from '../server-actions'
 import { useRouter } from 'next/navigation'
+import { DocumentApi } from '@/services/all-doc'
 
-export default function Search() {
+export default function SearchPage() {
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
-    const [rows, setRows] = React.useState<[]>([]);
-    const [user, setUser] = React.useState<{ name?: string, id?: number, role?: 'ADMIN' | 'USER' }>({});
+    const [rows, setRows] = React.useState<DocumentApi[]>([]);
+    const [user, setUser] = React.useState<{ name: string, id: number, role: 'ADMIN' | 'USER' }>({name: '',id:-1,role:'USER'});
     React.useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await Api.allDoc.getAllDocuments();
                 const user = await Api.auth.getMe();
-                setRows(data);
+                setRows(data as any); //не понимаю, как иначе решить эту проблему
                 setUser(user);
             } catch (e) {
                 console.log("Ошибка загрузки документа:", e);
@@ -47,7 +48,7 @@ export default function Search() {
             });
         }
     };
-
+    
     if (isLoading) return <Spinner />
 
     return (

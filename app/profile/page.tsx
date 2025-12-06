@@ -10,15 +10,16 @@ import { Spinner } from '@/components/ui/spinner'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { createDocument } from '../server-actions'
+import { Document } from '@prisma/client'
 
-export default function Search() {
+export default function ProfilePage() {
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
-    const [rows, setRows] = React.useState<[]>([]);
+    const [rows, setRows] = React.useState<Document[]>([]);
     React.useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await Api.myDoc.getMyDocuments();
-                setRows(data);
+                setRows(data as any);
             } catch (e) {
                 console.log("Ошибка загрузки документа:", e);
             } finally {

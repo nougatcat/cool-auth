@@ -2,11 +2,11 @@ import searchIMG from '../../../public/images/search.svg';
 import Image from 'next/image';
 import React from 'react';
 
-interface Props {
-    className?: string;
-}
+// interface Props {
+//     className?: string;
+// }
 
-export const FancySearch: React.FC<Props> = ({ className }) => {
+export const FancySearch: React.FC = () => {
     return (
         <div className='flex'>
             <input className='rounded-[5px_0_0_5px] p-[10px] bg-[#E7E7E7] text-[#515151] min-w-[280px] text-center' type="text" placeholder='Введите поисковой запрос' />
