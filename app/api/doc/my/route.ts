@@ -1,20 +1,35 @@
 // тут должен быть GET запрос на вывод всех документов, которые создал этот пользователь 
 import { prisma } from "@/prisma/prisma-client"
 import { getUserSession } from "@/lib/get-user-session"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { Prisma } from "@prisma/client"
 
 export const dynamic = 'force-dynamic' //! есть баг с асинхронным контекстом на уровне next-js, поэтому билд может не работать в этом месте
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+    const query = req.nextUrl.searchParams.get('query') || ''
     try {
         const user = await getUserSession()
         if (!user) {
             return NextResponse.json({ message: 'Вы не авторизованы' }, { status: 401 })
         }
+        const queryCondition = query
+            ? {
+                title: {
+                    contains: query,
+                    mode: 'insensitive' as const,
+                },
+            }
+            : {};
         const data = await prisma.document.findMany({
             where: {
-                authorId: Number(user.id)
+                AND: [
+                    queryCondition,
+                    {
+                        authorId: Number(user.id)
+                    }
+                ]
+                
             },
         })
         return NextResponse.json(data)

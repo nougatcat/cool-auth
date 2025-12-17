@@ -5,7 +5,7 @@ export interface DocumentApi extends Document {
     author: {name: string}
 }
 
-export const getAllDocuments = async () => {
-    const { data } = await axiosInstance.get<DocumentApi>('/doc')
+export const getAllDocuments = async (query?: string) => {
+    const { data } = await axiosInstance.get<DocumentApi>('/doc', {params: {query}})
     return data;
 }

@@ -15,10 +15,8 @@ import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { formDocumentSchema, formPermsSchema, TFormDocumentValues, TFormPermsValues } from "@/constants/zod-schemas"
 import toast from "react-hot-toast"
-import { deleteDocument, updateDocument } from '@/services/id_doc'
 import { useRouter } from 'next/navigation'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { updateDocumentPerms } from '@/services/my-doc'
 
 // export default function DocumentPage({ params }: { params: { id: string } }) { //? такой подход вызывает проблемы с типизацией
     // const { id } = React.use(params)
@@ -86,7 +84,7 @@ export default function DocumentPage() {
 
     const onSubmit = async (doc: TFormDocumentValues) => {
         try {
-            await updateDocument(id_doc, doc.title, doc.content)
+            await Api.idDoc.updateDocument(id_doc, doc.title, doc.content)
 
             toast.success('Данные обновлены 📝', {
                 icon: '✅',
@@ -100,7 +98,7 @@ export default function DocumentPage() {
     };
     const onDelete = async () => {
         try {
-            await deleteDocument(id_doc)
+            await Api.idDoc.deleteDocument(id_doc)
             toast.success('Данные удалены 📝', {
                 icon: '✅',
             });
@@ -117,7 +115,7 @@ export default function DocumentPage() {
 
     const onSubmitPerms = async (doc: TFormPermsValues) => {
         try {
-            await updateDocumentPerms(id_doc, doc.adminPerms, doc.userPerms)
+            await Api.myDoc.updateDocumentPerms(id_doc, doc.adminPerms, doc.userPerms)
 
             toast.success('Данные обновлены 📝', {
                 icon: '✅',

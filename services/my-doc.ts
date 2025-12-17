@@ -1,8 +1,8 @@
 import { Document } from "@prisma/client"
 import { axiosInstance } from "./instance"
 
-export const getMyDocuments = async () => {
-    const { data } = await axiosInstance.get<Document>('/doc/my')
+export const getMyDocuments = async (query?: string) => {
+    const { data } = await axiosInstance.get<Document>('/doc/my', {params: {query}})
     return data;
 }
 
