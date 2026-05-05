@@ -68,7 +68,7 @@ export default function SearchPage() {
     return (
         <FancyContainer>
             <div className="flex justify-between mb-5">
-                <FancyButton className='bg-[#BCFFB8]' image={createIMG} text='Создать' onClick={onCreate} />
+                <FancyButton className='bg-[var(--fancygreen)]' image={createIMG} text='Создать' onClick={onCreate} />
                 {/* ПОИСК */}
                 <div className='flex'>
                     <input

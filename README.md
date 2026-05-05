@@ -17,4 +17,6 @@ npm run prisma:studio
 npm run prisma:generate
 # prisma seed - для тестовых данных
 npm run prisma:seed
+# установка legacy компонент shadcn - tailwind 3
+nps shadcn@2.3.0
 ```

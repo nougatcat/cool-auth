@@ -161,7 +161,7 @@ export default function DocumentPage() {
                                 type="button" //если не указать, то при нажатии этой кнопки сработает и другая
                             />
                             <FancyButton
-                                className='bg-[#BCFFB8]'
+                                className='bg-[var(--fancygreen)] '
                                 image={saveIMG}
                                 text='Сохранить'
                                 type="submit"
@@ -223,7 +223,7 @@ export default function DocumentPage() {
                                         />
                                     </DialogClose>
                                     <FancyButton
-                                        className='bg-[#BCFFB8]'
+                                        className='bg-[var(--fancygreen)]'
                                         image={saveIMG}
                                         text='Сохранить'
                                         type="submit"

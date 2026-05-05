@@ -26,7 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
+      {/* suppressHydrationWarning нужен чтобы работал провайдер темы */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers> {/* //! Если есть проблема с рендером, возможно она из-за Providers */}
           <Suspense>

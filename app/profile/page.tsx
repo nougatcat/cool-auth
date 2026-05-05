@@ -57,7 +57,7 @@ export default function ProfilePage() {
         <FancyContainer>
             <div className="flex justify-between mb-5">
                 <FancyLink className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' backwards image={backIMG} text='К поиску' dist='/search' />
-                <FancyButton className='bg-[#BCFFB8]' image={createIMG} text='Создать' onClick={onCreate} />
+                <FancyButton className='bg-[var(--fancygreen)]' image={createIMG} text='Создать' onClick={onCreate} />
 
                 {/* ПОИСК */}
                 <div className='flex'>

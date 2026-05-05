@@ -19,6 +19,7 @@ import toast from "react-hot-toast"
 import { FormInput } from "./form-template/form-input"
 import { updateUserInfo } from "@/app/server-actions"
 import Link from "next/link"
+import { ThemeToggle } from "./themetoggler"
 
 interface Props {
     className?: string
@@ -61,6 +62,7 @@ export const Me: React.FC<Props> = ({ user, className }) => {
     return (
         <Container>
             <div className={cn("flex flex-col gap-6", className)}>
+                <ThemeToggle/>
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-2xl">Вход успешен!</CardTitle>
@@ -92,7 +94,7 @@ export const Me: React.FC<Props> = ({ user, className }) => {
                                         <Button
                                             type="button"
                                             variant="secondary"
-                                            className="w-full bg-[#BCFFB8]">
+                                            className="w-full bg-[var(--fancygreen)]">
                                             Перейти к документам
                                         </Button>
                                     </Link>
