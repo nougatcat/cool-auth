@@ -4,7 +4,8 @@ export const sendEmail = async (to: string, subject: string, template: React.Rea
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     const { data, error } = await resend.emails.send({
-        from: 'onboarding@resend.dev', // TODO добавить домен свой в настройки ресенд чтобы он тут был
+        from: 'onboarding@resend.dev', 
+        // // 2fa неважно TODO добавить домен свой в настройки ресенд чтобы он тут был, если буду делать 2фа, а я не буду
         to,
         subject,
         text: '',
