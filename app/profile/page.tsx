@@ -17,7 +17,7 @@ export default function ProfilePage() {
     const [query, setQuery] = React.useState<string>('')
     const router = useRouter();
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
-    const [rows, setRows] = React.useState<Document[]>([]);
+    const [rows, setRows] = React.useState<Document[] | null>(null);
     useDebounce(
         async () => {
             try {
@@ -27,11 +27,17 @@ export default function ProfilePage() {
                 setRows(data as any);
             } catch (e) {
                 console.log("Ошибка загрузки документа:", e);
-            } finally {
-                setIsLoading(false);
+                router.push('/')
             }
         }, 250, [query]
     )
+
+    // если setIsLoading добавить в finally из useDebounce, то метод сработает до асинхронного router.push
+    React.useEffect(() => {
+        if (rows) {
+            setIsLoading(false);
+        }
+    }, [rows]);
 
     const onCreate = async () => {
         try {
@@ -73,12 +79,16 @@ export default function ProfilePage() {
                 <FancyLink className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={settingsIMG} text='Настройки' dist='/' />
             </div>
 
-            <ProfileTable rows={rows} titles={['Название', 'Кому доступно', 'Права доступа']} />
+            {
+                (rows && rows.length > 0)
+                    ? (<ProfileTable rows={rows} titles={['Название', 'Кому доступно', 'Права доступа']} />)
+                    : (<b>Ничего не найдено</b>)
+            }
         </FancyContainer>
     )
 }
 
 
-// TODO добавить прелоадер
-// TODO добавить редирект на страницу логина если не авторизован
+//// СДЕЛАНО добавить прелоадер и ответ что ничего не найдено
+//// СДЕЛАНО добавить редирект на страницу логина если не авторизован
 //// неважно TODO поправить ошибки типов (в последнюю очередь)

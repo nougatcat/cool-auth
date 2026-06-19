@@ -28,7 +28,7 @@ export default function SearchPage() {
     // } //? LEGACY
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
-    const [rows, setRows] = React.useState<DocumentApi[]>([]);
+    const [rows, setRows] = React.useState<DocumentApi[] | null>(null);
     const [user, setUser] = React.useState<{ name: string, id: number, role: 'ADMIN' | 'USER' }>({ name: '', id: -1, role: 'USER' });
     useDebounce(
         async () => {
@@ -41,11 +41,18 @@ export default function SearchPage() {
                 setUser(user);
             } catch (e) {
                 console.log("Ошибка загрузки документа:", e);
-            } finally {
-                setIsLoading(false);
+                router.push('/')
             }
         }, 250, [query]
     )
+
+    // если setIsLoading добавить в finally из useDebounce, то метод сработает до асинхронного router.push
+    React.useEffect(() => {
+        if (rows) {
+            setIsLoading(false);
+        }
+    }, [rows]);
+
     const onCreate = async () => {
         try {
             const documentId = await createDocument()
@@ -81,18 +88,21 @@ export default function SearchPage() {
                     {/* <button
                         onClick={handleSearch}>
                         <Image src={searchIMG} alt='button' className='w-[43px]' />
-                    </button> //? LEGACY нет необходимости в кнопке, т.к. отслеживание query идет по поисковому инпуту */} 
+                    </button> //? LEGACY нет необходимости в кнопке, т.к. отслеживание query идет по поисковому инпуту */}
                 </div>
 
                 <FancyLink className='shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]' image={profileIMG} text='Профиль' dist='/profile' />
             </div>
-
-            <SearchTable rows={rows} user={user} titles={['Название', 'Владелец', 'Права доступа']} />
+            {
+                (rows && rows.length > 0)
+                    ? (<SearchTable rows={rows} user={user} titles={['Название', 'Владелец', 'Права доступа']} />)
+                    : (<b>Ничего не найдено</b>)
+            }
         </FancyContainer>
     )
 }
 
 
-// TODO добавить прелоадер
-// TODO добавить редирект на страницу логина если не авторизован
+//// СДЕЛАНО добавить прелоадер и ответ что ничего не найдено
+//// СДЕЛАНО добавить редирект на страницу логина если не авторизован
 //// неважно TODO поправить ошибки типов (в последнюю очередь)
